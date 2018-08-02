@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>CSV-to-EpiDoc Converter</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+</head>
+<!-- BODY SECTION -->
+
+<body>
+  <div class="container">
+
+    <!--  DASHBOARD -->
+    <div id="dashboard">
+      <div id="upper-button-area">
+        <div class="row">
+          <div class="col-lg-4">
+            <fieldset>
+              <legend>
+                File upload
+              </legend>
+              <input type="file" id="poly-file" accept=".csv" class="btn btn-primary" />
+            </fieldset>
+          </div>
+          <div class="col-lg-3">
+            <fieldset>
+              <legend>Separator</legend>
+              <div>
+                <input type="radio" id="separatorChoice1" name="separator" value="csv" checked>
+                <label for="separatorChoice1">Commata</label>
+              </div>
+              <div>
+                <input type="radio" id="separatorChoice2" name="separator" value="tsv">
+                <label for="separatorChoice2">Tabulators</label>
+              </div>
+              <div>
+                <input type="radio" id="separatorChoice3" name="separator" value="psv">
+                <label for="separatorChoice3">Pipes</label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-lg-3">
+            <fieldset>
+              <legend>
+                Apply template and export
+              </legend>
+              <button id="poly-export" class="btn btn-primary">Export EpiDoc</button>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div id="error">
+
+      </div>
+      <!-- MAPPING -->
+      <div id="row-to-epidoc-section-mapping">
+
+      </div>
+
+      <div id="jump-point">
+
+      </div>
+      <!-- PREVIEW and VISUALIZATION -->
+      <div id="preview-area">
+        <!-- PREVIEW area -->
+        <pre>
+          <code>&lt;teiHeader&gt;
+                  &lt;fileDesc&gt;
+                      &lt;titleStmt&gt;
+                          &lt;title&gt;<span class="drop-down" id="title"></span>&lt;/title&gt;
+                          &lt;editor&gt;<span class="drop-down" id="editor"></span>&lt;/editor&gt;
+                      &lt;/titleStmt&gt;
+                      &lt;publicationStmt&gt;
+                          &lt;authority&gt;Scholarly Institution&lt;/authority&gt;
+                          &lt;idno type="filename"&gt;<span class="drop-down" id="filename">.xml</span>&lt;/idno&gt;
+                          &lt;availability status="free"&gt;
+                              &lt;licence target="http://creativecommons.org/licenses/by/4.0/"&gt;Creative Commons
+                                  Attribution 4.0 International Licence (CC BY 4.0)&lt;/licence&gt;
+                          &lt;/availability&gt;
+                      &lt;/publicationStmt&gt;
+                      &lt;sourceDesc&gt;
+                          &lt;msDesc&gt;
+                              &lt;msIdentifier&gt;
+                                  &lt;settlement&gt;<span class="drop-down" id="settlement"></span>&lt;/settlement&gt;
+                                  &lt;repository&gt;<span class="drop-down" id="repository"></span>&lt;/repository&gt;
+                                  &lt;idno type="URI"&gt;<span class="drop-down" id="idno"></span>&lt;/idno&gt;
+                              &lt;/msIdentifier&gt;
+                              &lt;physDesc&gt;
+                                  &lt;objectDesc&gt;
+                                      &lt;supportDesc&gt;
+                                          &lt;support&gt;
+                                              &lt;objectType&gt;<span class="drop-down" id="objectType"></span>&lt;/objectType&gt;
+                                              &lt;material&gt;<span class="drop-down" id="material"></span>&lt;/material&gt;
+                                              &lt;dimensions&gt;
+                                              <span class="drop-down" id="dimensions"></span>
+                                              &lt;/dimensions&gt;
+                                          &lt;/support&gt;
+                                      &lt;/supportDesc&gt;
+                                  &lt;/objectDesc&gt;
+                                  &lt;handDesc&gt;
+                                      <span class="drop-down" id="handDesc"></span>
+                                  &lt;/handDesc&gt;
+                                  &lt;scriptDesc&gt;
+                                      <span class="drop-down" id="scriptDesc"></span>
+                                  &lt;/scriptDesc&gt;
+                                  &lt;decoDesc&gt;
+                                      <span class="drop-down" id="decoDesc"></span>
+                                  &lt;/decoDesc&gt;
+                              &lt;/physDesc&gt;
+                              &lt;history&gt;
+                                  &lt;origin&gt;
+                                      &lt;origDate&gt;<span class="drop-down" id="originDate"></span>&lt;/origDate&gt;
+                                      &lt;origPlace&gt;
+                                          &lt;placeName&gt;<span class="drop-down" id="originPlace"></span>&lt;/placeName&gt;
+                                      &lt;/origPlace&gt;
+                                  &lt;/origin&gt;
+                              &lt;/history&gt;
+                          &lt;/msDesc&gt;
+                      &lt;/sourceDesc&gt;
+                  &lt;/fileDesc&gt;
+                  &lt;profileDesc&gt;
+                      &lt;particDesc&gt;
+                          &lt;listPerson&gt;
+                              <span class="drop-down" id="listPerson"></span>
+                          &lt;/listPerson&gt;
+                      &lt;/particDesc&gt;
+                      &lt;langUsage&gt;
+                          <span class="drop-down" id="langUsage"></span>
+                      &lt;/langUsage&gt;
+                  &lt;/profileDesc&gt;
+              &lt;/teiHeader&gt;
+              &lt;text&gt;
+                  &lt;body&gt;
+                      &lt;div type="edition" xml:space="default"&gt;
+                          &lt;div type="textpart" subtype="front" n="1" xml:lang="<span class="drop-down" id="language"></span>"&gt;
+                              &lt;ab&gt;
+                                  <span class="drop-down" id="transcription"></span>
+                              &lt;/ab&gt;
+                          &lt;/div&gt;
+                      &lt;/div&gt;
+                      &lt;div type="translation"&gt;
+                          &lt;div type="textpart" n="1"&gt;
+                              &lt;p&gt;
+                                  <span class="drop-down" id="translation"></span>
+                              &lt;/p&gt;
+                          &lt;/div&gt;
+                      &lt;/div&gt;
+                      &lt;div type="commentary" subtype="description"&gt;
+                          <span class="drop-down" id="description"></span>
+                      &lt;/div&gt;
+                      &lt;div type="commentary" subtype="commentary"&gt;
+                          <span class="drop-down" id="commentary"></span>
+                      &lt;/div&gt;
+                      &lt;div type="apparatus" subtype="edition"&gt;
+                          &lt;listApp n="1"&gt;
+                              <span class="drop-down" id="apparatus"></span>
+                          &lt;/listApp&gt;
+                      &lt;/div&gt;
+                      &lt;div type="bibliography"&gt;
+                          &lt;listBibl&gt;
+                              <span class="drop-down" id="listBibl"></span>
+                          &lt;/listBibl&gt;
+                      &lt;/div&gt;
+                  &lt;/body&gt;
+              &lt;/text&gt;</code>
+        </pre>
+      </div>
+
+      <div id="output">
+
+      </div>
+      <div id="visualization-area">
+        <!-- VISUALIZATION area -->
+      </div>
+
+      <!--  SCRIPT part -->
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+      <script src="../JS/csv-to-epidoc.js"></script>
+    </div>
+</body>
+
+</html>
