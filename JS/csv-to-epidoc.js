@@ -138,24 +138,24 @@ const formatSection = function(text, element = 'p') {
           })
           .join('\n');
         break;
-      case 'handNote': //<scriptNote xml:id="script1" script="square_hebrew">
+      case 'handNote':
         return text.split('\n')
           .map((textblock, index, array) => {
-            return `<${element} scriptRef="" scope=""/>${textblock.trim()}</${element}>`
+            return `<${element} scriptRef="" scope="">${textblock.trim()}</${element}>`
           })
           .join('\n');
         break;
-      case 'scriptNote': //<scriptNote xml:id="script1" script="square_hebrew">
+      case 'scriptNote':
         return text.split('\n')
           .map((textblock, index, array) => {
-            return `<${element} xml:id="${generateID(textblock)}" script=""/>${textblock.trim()}</${element}>`
+            return `<${element} xml:id="${generateID(textblock)}" script="">${textblock.trim()}</${element}>`
           })
           .join('\n');
         break;
       case 'decoNote': //<scriptNote xml:id="script1" script="square_hebrew">
         return text.split('\n')
           .map((textblock, index, array) => {
-            return `<${element} xml:id="${generateID(textblock)}" type=""/>${textblock.trim()}</${element}>`
+            return `<${element} xml:id="${generateID(textblock)}" type="">${textblock.trim()}</${element}>`
           })
           .join('\n');
         break;

@@ -77,6 +77,7 @@ The tool is based on the JavaScript libraries [D3](https://d3js.org/) and [_loda
 
 * Make mor customization possible, e.g. for splitting of textparts.
 * Provide possibility to add a CSV file containing data about the persons referenced in `persList`.
+* Better support for none/NaN values or missing values.
 
 ## License
 
