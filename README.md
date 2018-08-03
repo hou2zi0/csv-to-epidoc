@@ -8,6 +8,9 @@
     - [Paragraphs and linebreaks](#paragraphs-and-linebreaks)
     - [Other list-like structures](#other-list-like-structures)
     - [Dimensions](#dimensions)
+  - [Software used](#software-used)
+  - [To Do](#to-do)
+  - [License](#license)
 
 <!-- TOC END -->
 
@@ -30,13 +33,14 @@ The user loads up a CSV-file and selects the mapping of columns to EpiDoc sectio
 
 ![Filled in EpiDoc template](data/images/filled_in.png)
 
-An example csv file with pipe separators may be found here: [here](https://hou2zi0.github.io/csv-to-epidoc/data/files/epidat.csv)
+An example csv file with pipe separators may be found [here](https://hou2zi0.github.io/csv-to-epidoc/data/files/epidat.csv).
 
-The example file was provided by [Thomas Kollatz](https://github.com/KollatzThomas)and is licensed as follows:
+The example file was provided by [Thomas Kollatz](https://github.com/KollatzThomas) and is licensed as follows:
 
 [Steinheim-Institut](http://steinheim-institut.de/)
+
 [http://www.steinheim-institut.de:80/cgi-bin/epidat?id=ffb](http://www.steinheim-institut.de:80/cgi-bin/epidat?id=ffb) lizenziert unter einer Creative Commons Lizenzvertrag
-[Creative Commons Namensnennung 4.0](http://creativecommons.org/licenses/by/4.0/) Internationale Lizenz
+[Creative Commons Namensnennung 4.0](http://creativecommons.org/licenses/by/4.0/) Internationale Lizenz.
 
 ## Conversion process and customizability
 
