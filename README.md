@@ -24,7 +24,7 @@ The example file was provided by [Thomas Kollatz](https://github.com/KollatzThom
 [http://www.steinheim-institut.de:80/cgi-bin/epidat?id=ffb](http://www.steinheim-institut.de:80/cgi-bin/epidat?id=ffb) lizenziert unter einer Creative Commons Lizenzvertrag
 [Creative Commons Namensnennung 4.0](http://creativecommons.org/licenses/by/4.0/) Internationale Lizenz
 
-## Conversion
+## Conversion process and customizability
 
 The in-file conversion procedure is controlled by a `switch` statement having one arm for each EpiDoc element or section, that needs further processing Thus it is easily customizable. See below:
 
