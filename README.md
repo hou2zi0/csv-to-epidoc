@@ -1,5 +1,19 @@
 # csv-to-epidoc
 
+<!-- TOC START min:1 max:3 link:true update:true -->
+- [csv-to-epidoc](#csv-to-epidoc)
+  - [Mapping](#mapping)
+  - [Conversion process and customizability](#conversion-process-and-customizability)
+  - [Specific conversions](#specific-conversions)
+    - [Paragraphs and linebreaks](#paragraphs-and-linebreaks)
+    - [Other list-like structures](#other-list-like-structures)
+    - [Dimensions](#dimensions)
+
+<!-- TOC END -->
+
+
+
+
 Many scholars — in epigraphy as well as in other fields associated with scholarly editions — tend to record and organize their data, compiled on field or archive trips, as tabular data, before starting to compose a historical narrative or a printable scholarly edition.
 
 This [tool](https://hou2zi0.github.io/csv-to-epidoc/HTML/csv-to-epidoc.html) wants to provide an easy path to map the columns of the tabular data to specific fields in a basic EpiDoc template, therefore giving the means to easily convert CSV files into basic EpdiDoc. Starting from these basic EpiDoc files the scholar may dive further into XML based approaches to digital scholarly editing or just simply fill in missing values and provide basic EpiDoc versions of her scholarship as reusable research data.  
@@ -55,17 +69,17 @@ switch (element) {
 […]
 ```
 
-### Sepcific conversions
+## Specific conversions
 
-#### Paragraphs and linebreaks
+### Paragraphs and linebreaks
 
 EpiDoc section that contain linebreaks or paragraphs will try to split incoming textparts on a newline (“enter key”) and subsequently try to apply basic conversion to produce the required EpiDoc XML markup for this section.
 
-#### Other list-like structures
+### Other list-like structures
 
 Other “list-like structures”, like `handNote` or `persList` will try to split incoming textparts on a newline (“enter key”) and subsequently try to apply basic conversion to produce the required EpiDoc XML markup for this section.
 
-#### Dimensions
+### Dimensions
 
 The dimensions section expects one string `height x width x depth` and trys to split it on `x` (this feature will be customizable, see To Do).
 
