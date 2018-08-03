@@ -8,7 +8,7 @@ This [tool](https://hou2zi0.github.io/csv-to-epidoc/HTML/csv-to-epidoc.html) wan
 
 Converts a character-separated value file into TEI-XML EpiDoc files. The conversion is based on a basic EpiDoc template and – currently very basic – conversion functions associated with different sections of the EpiDoc template.
 
-The user loads up a CSV-file and selects the mapping of columns to EpiDoc section by usage of the dropdown menus generated based on the CSV file’s columns. Subsequently, the user mapping is applied to each row of the CSV. The generated EpiDoc files are bundled into an `teiCorpus` and downloaded.
+The user loads up a CSV-file and selects the mapping of columns to EpiDoc section by usage of the dropdown menus generated based on the CSV file’s columns. Subsequently, the user mapping is applied to each row of the CSV. The generated EpiDoc files are bundled into an `teiCorpus` and downloaded; because not all attribute values can be set automatically, the file will be well formed, but not valid.
 
 ![Upload files](data/images/upload.png)
 
@@ -78,6 +78,7 @@ The tool is based on the JavaScript libraries [D3](https://d3js.org/) and [_loda
 * Make mor customization possible, e.g. for splitting of textparts.
 * Provide possibility to add a CSV file containing data about the persons referenced in `persList`.
 * Better support for none/NaN values or missing values.
+* Adding dropdown for facsimile section.
 
 ## License
 
