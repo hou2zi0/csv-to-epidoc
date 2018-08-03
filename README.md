@@ -2,13 +2,19 @@
 
 Many scholars — in epigraphy as well as in other fields associated with scholarly editions — tend to record and organize their data, compiled on field or archive trips, as tabular data, before starting to compose a historical narrative or a printable scholarly edition.
 
-This [tool](https://hou2zi0.github.io/csv-to-epidoc/HTML/csv-to-epidoc.html) wants to provide an easy-to-use tool to map the columns of the tabular data to specific fields in a basic EpiDoc template, therefore giving the means to easily convert CSV files into basic EpdiDoc. Starting from these basic EpiDoc files the scholar may dive further into XML based approaches to digital scholarly editing or just simply fill in missing values and provide basic EpiDoc versions of her scholarship as reusable research data.  
+This [tool](https://hou2zi0.github.io/csv-to-epidoc/HTML/csv-to-epidoc.html) wants to provide an easy path to map the columns of the tabular data to specific fields in a basic EpiDoc template, therefore giving the means to easily convert CSV files into basic EpdiDoc. Starting from these basic EpiDoc files the scholar may dive further into XML based approaches to digital scholarly editing or just simply fill in missing values and provide basic EpiDoc versions of her scholarship as reusable research data.  
 
 ## Mapping
 
 Converts a character-separated value file into TEI-XML EpiDoc files. The conversion is based on a basic EpiDoc template and – currently very basic – conversion functions associated with different sections of the EpiDoc template.
 
 The user loads up a CSV-file and selects the mapping of columns to EpiDoc section by usage of the dropdown menus generated based on the CSV file’s columns. Subsequently, the user mapping is applied to each row of the CSV. The generated EpiDoc files are bundled into an `teiCorpus` and downloaded.
+
+![Upload files](data/images/upload.png)
+
+![Mapping of column names to   EpiDoc sections](data/images/mapping.png)
+
+![Filled in EpiDoc template](data/images/filled_in.png)
 
 An example csv file with pipe separators may be found here: [here](https://hou2zi0.github.io/csv-to-epidoc/data/files/epidat.csv)
 
@@ -49,9 +55,28 @@ switch (element) {
 […]
 ```
 
+### Sepcific conversions
+
+#### Paragraphs and linebreaks
+
+EpiDoc section that contain linebreaks or paragraphs will try to split incoming textparts on a newline (“enter key”) and subsequently try to apply basic conversion to produce the required EpiDoc XML markup for this section.
+
+#### Other list-like structures
+
+Other “list-like structures”, like `handNote` or `persList` will try to split incoming textparts on a newline (“enter key”) and subsequently try to apply basic conversion to produce the required EpiDoc XML markup for this section.
+
+#### Dimensions
+
+The dimensions section expects one string `height x width x depth` and trys to split it on `x` (this feature will be customizable, see To Do).
+
 ## Software used
 
 The tool is based on the JavaScript libraries [D3](https://d3js.org/) and [_lodash](https://lodash.com). It was inspired by reading the [Learn JS Data](http://learnjsdata.com/index.html) tutorial.
+
+## To Do
+
+* Make mor customization possible, e.g. for splitting of textparts.
+* Provide possibility to add a CSV file containing data about the persons referenced in `persList`.
 
 ## License
 
