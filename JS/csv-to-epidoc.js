@@ -134,7 +134,7 @@ const formatSection = function(text, element = 'p') {
       case 'language':
         return text.split('\n')
           .map((textblock, index, array) => {
-            return `<${element} ident="" usage="${100/array.length}"/>${textblock.trim()}</${element}>`
+            return `<${element} ident="" usage="${100/array.length}">${textblock.trim()}</${element}>`
           })
           .join('\n');
         break;
