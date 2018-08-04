@@ -1,119 +1,119 @@
 // @see https://github.com/hou2zi0/csv-to-epipoc
 
 
-const getSeparator = function() {
-  const separator = Array.from(document.querySelectorAll('[name="separator"]'))
-    .filter((node) => {
-      return (node.checked)
-    });
-  return separator[0].value;
+const getSeparator = function () {
+	const separator = Array.from(document.querySelectorAll('[name="separator"]'))
+		.filter((node) => {
+			return (node.checked)
+		});
+	return separator[0].value;
 };
 
-const readFile = function() {
-  switch (CONFIG.separator) {
-    case 'csv':
-      d3.csv(CONFIG.reader.result, function(data) {
-          return data;
-        })
-        .then(function(data) {
-          processFile(data);
-        }, function(error) {
-          console.log(error);
-          CONFIG.fileLoaded = false;
-        });
-      break;
-    case 'tsv':
-      d3.tsv(CONFIG.reader.result, function(data) {
-          return data;
-        })
-        .then(function(data) {
-          processFile(data);
-        }, function(error) {
-          console.log(error);
-          CONFIG.fileLoaded = false;
-        });
-      break;
-    case 'psv':
-      d3.dsv('|', CONFIG.reader.result, function(data) {
-          return data;
-        })
-        .then(function(data) {
-          processFile(data);
-        }, function(error) {
-          console.log(error);
-          CONFIG.fileLoaded = false;
-        });
-      break;
-  };
+const readFile = function () {
+	switch (CONFIG.separator) {
+	case 'csv':
+		d3.csv(CONFIG.reader.result, function (data) {
+				return data;
+			})
+			.then(function (data) {
+				processFile(data);
+			}, function (error) {
+				console.log(error);
+				CONFIG.fileLoaded = false;
+			});
+		break;
+	case 'tsv':
+		d3.tsv(CONFIG.reader.result, function (data) {
+				return data;
+			})
+			.then(function (data) {
+				processFile(data);
+			}, function (error) {
+				console.log(error);
+				CONFIG.fileLoaded = false;
+			});
+		break;
+	case 'psv':
+		d3.dsv('|', CONFIG.reader.result, function (data) {
+				return data;
+			})
+			.then(function (data) {
+				processFile(data);
+			}, function (error) {
+				console.log(error);
+				CONFIG.fileLoaded = false;
+			});
+		break;
+	};
 };
 
-const processFile = function(data) {
-  console.log(data);
-  console.log(data.columns);
-  Array.from(document.getElementsByClassName('drop-down'))
-    .forEach((node) => {
-      const dropdown = `<select>
+const processFile = function (data) {
+	console.log(data);
+	console.log(data.columns);
+	Array.from(document.getElementsByClassName('drop-down'))
+		.forEach((node) => {
+			const dropdown = `<select>
        <option value="no-option" selected="selected">--Select an option--</option>
        ${data.columns.map(item => { return `<option value="${item.trim()}">${item.trim()}</option>`}).join('\n')}
        </select>`;
-      node.innerHTML = dropdown;
-    });
-  CONFIG.fileLoaded = true;
-  const applyAndExportButton = document.getElementById('poly-export')
-    .addEventListener('click', (event) => {
-      applyAndExport(data);
-    });
+			node.innerHTML = dropdown;
+		});
+	CONFIG.fileLoaded = true;
+	const applyAndExportButton = document.getElementById('poly-export')
+		.addEventListener('click', (event) => {
+			applyAndExport(data);
+		});
 };
 
 const CONFIG = {
-  "fileLoaded": false
+	"fileLoaded": false
 };
 
-const loadFile = function() {
-  const Up = document.getElementById('poly-file')
-    .addEventListener("change", (e) => {
+const loadFile = function () {
+	const Up = document.getElementById('poly-file')
+		.addEventListener("change", (e) => {
 
-      CONFIG.separator = getSeparator();
+			CONFIG.separator = getSeparator();
 
-      const filehandle = document.getElementById('poly-file')
-        .files[0];
-      CONFIG.reader = new FileReader();
+			const filehandle = document.getElementById('poly-file')
+				.files[0];
+			CONFIG.reader = new FileReader();
 
-      if (filehandle) {
-        CONFIG.reader.readAsDataURL(filehandle);
-      }
+			if (filehandle) {
+				CONFIG.reader.readAsDataURL(filehandle);
+			}
 
-      CONFIG.reader.addEventListener("load", () => {
-        readFile();
-      }, false);
-    });
+			CONFIG.reader.addEventListener("load", () => {
+				readFile();
+			}, false);
+		});
 };
 
 loadFile();
 
 const epidocIDs = Array.from(document.getElementsByClassName('drop-down'))
-  .map((node) => {
-    return node.getAttribute('id');
-  });
+	.map((node) => {
+		return node.getAttribute('id');
+	});
 
-const generateID = function(textblock, trim = false) {
-  if (trim && textblock.length > 15) {
-    return `${textblock.slice(0,16).toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
-  } else {
-    return `${textblock.toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
-  }
+const generateID = function (textblock, trim = false) {
+	if (trim && textblock.length > 15) {
+		return `${textblock.slice(0,16).toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
+	} else {
+		return `${textblock.toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
+	}
 
 };
 
-const formatSection = function(text, element = 'p') {
-  if (text.startsWith('Error:')) {
-    return `Error: No column was chosen for this EpiDoc section.`;
-  } else {
-    switch (element) {
-      case 'person':
-        return text.split('\n')
-          .map((textblock, index) => {
-            return `<person xml:id="${generateID(textblock)}" sex="1">
+const formatSection = function (text, element = 'p') {
+	if (text.startsWith('Error:')) {
+		return `Error: No column was chosen for this EpiDoc section.`;
+	} else {
+		switch (element) {
+		case 'person':
+			return text.split('\n')
+				.map((textblock, index) => {
+					return `<person xml:id="${generateID(textblock)}" sex="1">
                         <persName>
                         ${textblock.trim()}
                         </persName>
@@ -121,103 +121,103 @@ const formatSection = function(text, element = 'p') {
                         <death/>
                         <floruit/>
                     </person>`
-          })
-          .join('\n');
-        break;
-      case 'lb':
-        return text.split('\n')
-          .map((textblock, index) => {
-            return `<${element} n="${index+1}"/>${textblock.trim()}`
-          })
-          .join('\n');
-        break;
-      case 'language':
-        return text.split('\n')
-          .map((textblock, index, array) => {
-            return `<${element} ident="" usage="${100/array.length}"/>${textblock.trim()}</${element}>`
-          })
-          .join('\n');
-        break;
-      case 'handNote': //<scriptNote xml:id="script1" script="square_hebrew">
-        return text.split('\n')
-          .map((textblock, index, array) => {
-            return `<${element} scriptRef="" scope=""/>${textblock.trim()}</${element}>`
-          })
-          .join('\n');
-        break;
-      case 'scriptNote': //<scriptNote xml:id="script1" script="square_hebrew">
-        return text.split('\n')
-          .map((textblock, index, array) => {
-            return `<${element} xml:id="${generateID(textblock)}" script=""/>${textblock.trim()}</${element}>`
-          })
-          .join('\n');
-        break;
-      case 'decoNote': //<scriptNote xml:id="script1" script="square_hebrew">
-        return text.split('\n')
-          .map((textblock, index, array) => {
-            return `<${element} xml:id="${generateID(textblock)}" type=""/>${textblock.trim()}</${element}>`
-          })
-          .join('\n');
-        break;
-      case 'app':
-        return text.split('\n')
-          .map((textblock, index) => {
-            return `<${element}><note>${textblock.trim()}</note></${element}>`
-          })
-          .join('\n');
-        break;
-      case 'bibl':
-        return text.split('\n')
-          .map((textblock) => {
-            return `<${element}>${textblock.trim()}</${element}>`
-          })
-          .join('\n');
-        break;
-      case 'dimensions':
-        const textblock = text.split('x');
-        return `<height unit="cm">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</height>
+				})
+				.join('\n');
+			break;
+		case 'lb':
+			return text.split('\n')
+				.map((textblock, index) => {
+					return `<${element} n="${index+1}"/>${textblock.trim()}`
+				})
+				.join('\n');
+			break;
+		case 'language':
+			return text.split('\n')
+				.map((textblock, index, array) => {
+					return `<${element} ident="" usage="${100/array.length}">${textblock.trim()}</${element}>`
+				})
+				.join('\n');
+			break;
+		case 'handNote':
+			return text.split('\n')
+				.map((textblock, index, array) => {
+					return `<${element} scriptRef="" scope="">${textblock.trim()}</${element}>`
+				})
+				.join('\n');
+			break;
+		case 'scriptNote':
+			return text.split('\n')
+				.map((textblock, index, array) => {
+					return `<${element} xml:id="${generateID(textblock)}" script="">${textblock.trim()}</${element}>`
+				})
+				.join('\n');
+			break;
+		case 'decoNote': //<scriptNote xml:id="script1" script="square_hebrew">
+			return text.split('\n')
+				.map((textblock, index, array) => {
+					return `<${element} xml:id="${generateID(textblock)}" type="">${textblock.trim()}</${element}>`
+				})
+				.join('\n');
+			break;
+		case 'app':
+			return text.split('\n')
+				.map((textblock, index) => {
+					return `<${element}><note>${textblock.trim()}</note></${element}>`
+				})
+				.join('\n');
+			break;
+		case 'bibl':
+			return text.split('\n')
+				.map((textblock) => {
+					return `<${element}>${textblock.trim()}</${element}>`
+				})
+				.join('\n');
+			break;
+		case 'dimensions':
+			const textblock = text.split('x');
+			return `<height unit="cm">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</height>
       <width unit="cm">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</width>
       <depth unit="cm">${(textblock[2])?textblock[2].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</depth>`;
-        break;
-      default:
-        return text.split('\n')
-          .map((textblock) => {
-            return `<${element}>${textblock.trim()}</${element}>`
-          })
-          .join('\n');
-        break;
-    }
-  }
+			break;
+		default:
+			return text.split('\n')
+				.map((textblock) => {
+					return `<${element}>${textblock.trim()}</${element}>`
+				})
+				.join('\n');
+			break;
+		}
+	}
 };
 
-const applyAndExport = function(data) {
-  const map = {};
-  Array.from(document.getElementsByClassName('drop-down'))
-    .forEach((node) => {
-      map[node.getAttribute('id')] = node.getElementsByTagName('select')[0].value;
-    });
-  console.log(map);
-  const jumppoint = document.getElementById('jump-point');
+const applyAndExport = function (data) {
+	const map = {};
+	Array.from(document.getElementsByClassName('drop-down'))
+		.forEach((node) => {
+			map[node.getAttribute('id')] = node.getElementsByTagName('select')[0].value;
+		});
+	console.log(map);
+	const jumppoint = document.getElementById('jump-point');
 
-  jumppoint.innerHTML = `<a href="#output">Jump to code output!</a><hr/>`;
+	jumppoint.innerHTML = `<a href="#output">Jump to code output!</a><hr/>`;
 
-  const out = [];
+	const out = [];
 
-  data.forEach((row) => {
-    row['no-option'] = "Error: No column was chosen for this EpiDoc section.";
-    console.log(row[map['title']]);
-    const output = document.getElementById('output');
-    const div = document.createElement('div');
-    const h3 = document.createElement('h3');
-    h3.textContent = row[map['title']];
-    const pre = document.createElement('pre');
-    const code = document.createElement('code');
+	data.forEach((row) => {
+		row['no-option'] = "Error: No column was chosen for this EpiDoc section.";
+		console.log(row[map['title']]);
+		const output = document.getElementById('output');
+		const div = document.createElement('div');
+		const h3 = document.createElement('h3');
+		h3.textContent = row[map['title']];
+		const pre = document.createElement('pre');
+		const code = document.createElement('code');
 
-    div.appendChild(h3);
-    div.appendChild(pre);
-    pre.appendChild(code);
-    output.appendChild(div);
-    const XML_output = `<TEI>
+		div.appendChild(h3);
+		div.appendChild(pre);
+		pre.appendChild(code);
+		output.appendChild(div);
+		const XML_output = `<TEI>
       <teiHeader>
             <fileDesc>
                 <titleStmt>
@@ -321,24 +321,26 @@ const applyAndExport = function(data) {
             </body>
         </text>
       </TEI>`;
-    code.textContent = XML_output;
-    out.push(XML_output);
-  })
-  console.log(out.length);
-  const teiCorpus = `<teiCorpus xmlns="http://www.tei-c.org/ns/1.0">
+		code.setAttribute('class', 'xml tei-doc-link');
+		code.textContent = XML_output;
+		out.push(XML_output);
+	})
+	TEI_DOC_LINK_CONFIG.teiDocLinks();
+	console.log(out.length);
+	const teiCorpus = `<teiCorpus xmlns="http://www.tei-c.org/ns/1.0">
                      <teiHeader/>
                      ${out.join('\n')}
                     </teiCorpus>`;
-  prepareDownload(teiCorpus, "epidoc_converter.xml");
+	prepareDownload(teiCorpus, "epidoc_converter.xml");
 };
 
-const prepareDownload = function(data, filename) {
-  const content = data;
-  const element = document.createElement('a');
-  element.setAttribute('href', 'data:text/xml;charset=utf-8,' + encodeURIComponent(content));
-  element.setAttribute('download', filename);
-  element.style.display = 'none';
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
+const prepareDownload = function (data, filename) {
+	const content = data;
+	const element = document.createElement('a');
+	element.setAttribute('href', 'data:text/xml;charset=utf-8,' + encodeURIComponent(content));
+	element.setAttribute('download', filename);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
 };
