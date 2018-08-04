@@ -173,6 +173,15 @@ const formatSection = function (text, element = 'p') {
 				})
 				.join('\n');
 			break;
+		case 'graphic':
+			return text.split('\n')
+				.map((textblock) => {
+					return `<${element} url="${textblock.trim()}">
+              <desc>DESCRIPTION</desc>
+            </${element}>`
+				})
+				.join('\n');
+			break;
 		case 'dimensions':
 			const textblock = text.split('x');
 			return `<height unit="cm">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</height>
@@ -286,6 +295,9 @@ const applyAndExport = function (data) {
                 </langUsage>
             </profileDesc>
         </teiHeader>
+        <facsimile>
+          ${formatSection(row[map['facsimile']],'graphic')}
+        </facsimile>
         <text>
             <body>
                 <div type="edition" xml:space="default">
