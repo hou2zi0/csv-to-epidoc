@@ -77,13 +77,24 @@
                   <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-editor.html'>editor</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-titleStmt.html'>titleStmt</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-publicationStmt.html'>publicationStmt</a></span><span class='delimiters'>&gt;</span>
-                  <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-authority.html'>authority</a></span><span class='delimiters'>&gt;</span>Scholarly Institution<span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-authority.html'>authority</a></span><span class='delimiters'>&gt;</span>
+                  <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-authority.html'>authority</a></span><span class='delimiters'>&gt;</span>
+                    <input type="text" id="authority" class="static-fields" name="authority" value="Scholarly institution" required style="visibility: hidden;"/>
+                  <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-authority.html'>authority</a></span><span class='delimiters'>&gt;</span>
                   <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-idno.html'>idno</a> <span class="attribute"><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.typed.html#tei_att.type'>type</a></span><span class="delimiters">=</span><span class="value">"filename"</span></span><span class='delimiters'>&gt;</span>
                     <span class="drop-down" id="filename"></span>.xml
                   <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-idno.html'>idno</a></span><span class='delimiters'>&gt;</span>
                   <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-availability.html'>availability</a> <span class="attribute"><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.transcriptional.html#tei_att.status'>status</a></span><span class="delimiters">=</span><span class="value">"free"</span></span><span class='delimiters'>&gt;</span>
-                      <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-licence.html'>licence</a> <span class="attribute">target</span><span class="delimiters">=</span><span class="value">"http://creativecommons.org/licenses/by/4.0/"</span></span><span class='delimiters'>&gt;</span>Creative Commons
-                          Attribution 4.0 International Licence (CC BY 4.0)<span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-licence.html'>licence</a></span><span class='delimiters'>&gt;</span>
+                      <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-licence.html'>licence</a> <span class="attribute">target</span><span class="delimiters">=</span><span class="value">"http://url.com/to/license/"</span></span><span class='delimiters'>&gt;</span>
+                        <select id="licenses" class="static-fields" style="visibility: hidden;">
+                           <option value="CC0" selected="selected">Public Domain (CC0)</option>
+                           <option value="CC_BY">Attribution (CC BY)</option>
+                           <option value="CC_BY_SA">Attribution – Share Alike (CC BY-SA)</option>
+                           <option value="CC_BY_ND">Attribution – No Derivatives (CC BY-ND)</option>
+                           <option value="CC_BY_NC">Attribution – Non Commercial (CC BY-NC)</option>
+                           <option value="CC_BY_NC_SA">Attribution – Non Commercial – Share Alike (CC BY-NC-SA)</option>
+                           <option value="CC_BY_NC_ND">Attribution – Non Commercial – No Derivatives (CC BY-NC-SA)</option>
+                        </select>
+                      <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-licence.html'>licence</a></span><span class='delimiters'>&gt;</span>
                   <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-availability.html'>availability</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-publicationStmt.html'>publicationStmt</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-sourceDesc.html'>sourceDesc</a></span><span class='delimiters'>&gt;</span>
@@ -110,7 +121,13 @@
                                         <span class="drop-down" id="material"></span>
                                       <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-material.html'>material</a></span><span class='delimiters'>&gt;</span>
                                       <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-dimensions.html'>dimensions</a></span><span class='delimiters'>&gt;</span>
-                                        <span class="drop-down" id="dimensions"></span>
+                                        <span class="static-fields" style="visibility: hidden;">Split entries in <span class="drop-down" id="dimensions"></span> on <input type="text" id="separator-dimensions" name="separator-dimensions" value="x" maxlength="1" size="2" required />.
+                                        The measurement unit is <select id="unit-dimensions">
+                                          <option value="m">centimeter</option>
+                                           <option value="cm" selected="selected">centimeter</option>
+                                           <option value="mm">milimeter</option>
+                                           <option value="in">inch</option>
+                                        </select></span>.
                                       <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-dimensions.html'>dimensions</a></span><span class='delimiters'>&gt;</span>
                                   <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-support.html'>support</a></span><span class='delimiters'>&gt;</span>
                               <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-supportDesc.html'>supportDesc</a></span><span class='delimiters'>&gt;</span>
@@ -181,7 +198,7 @@
               <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-div.html'>div</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-div.html'>div</a> <span class="attribute"><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.typed.html#tei_att.type'>type</a></span><span class="delimiters">=</span><span class="value">"apparatus"</span> <span class="attribute"><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.typed.html#tei_att.subtype'>subtype</a></span><span class="delimiters">=</span><span class="value">"edition"</span></span><span class='delimiters'>&gt;</span>
                   <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-listApp.html'>listApp</a> <span class="attribute"><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.global.html#tei_att.n'>n</a></span><span class="delimiters">=</span><span class="value">"1"</span></span><span class='delimiters'>&gt;</span>
-                    <span class="drop-down" id="apparatus"></span>
+                    <span class="static-fields" style="visibility: hidden;">Location-reference and note in <span class="drop-down" id="apparatus"></span> are separated by <input type="text" id="separator-apparatus" name="separator-apparatus" value=":" maxlength="1" size="2" required /></span>
                   <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-listApp.html'>listApp</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-div.html'>div</a></span><span class='delimiters'>&gt;</span>
               <span class='delimiters'>&lt;</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-div.html'>div</a> <span class="attribute"><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.typed.html#tei_att.type'>type</a></span><span class="delimiters">=</span><span class="value">"bibliography"</span></span><span class='delimiters'>&gt;</span>
@@ -191,9 +208,7 @@
               <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-div.html'>div</a></span><span class='delimiters'>&gt;</span>
           <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-body.html'>body</a></span><span class='delimiters'>&gt;</span>
       <span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-text.html'>text</a></span><span class='delimiters'>&gt;</span>
-<span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-TEI.html'>TEI</a></span><span class='delimiters'>&gt;</span>
-        </code>
-      </pre>
+<span class='delimiters'>&lt;/</span><span class='element'><a class='tei-doc-link' href='http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-TEI.html'>TEI</a></span><span class='delimiters'>&gt;</span></code></pre>
       </div>
 
       <div id="output">

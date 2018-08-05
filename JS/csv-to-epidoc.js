@@ -59,6 +59,12 @@ const processFile = function (data) {
 			node.innerHTML = dropdown;
 		});
 	CONFIG.fileLoaded = true;
+
+	Array.from(document.getElementsByClassName('static-fields'))
+		.forEach((node) => {
+			node.setAttribute('style', 'visibility: normal;');
+		});
+
 	const applyAndExportButton = document.getElementById('poly-export')
 		.addEventListener('click', (event) => {
 			applyAndExport(data);
@@ -102,7 +108,6 @@ const generateID = function (textblock, trim = false) {
 	} else {
 		return `${textblock.toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
 	}
-
 };
 
 const formatSection = function (text, element = 'p') {
@@ -160,11 +165,28 @@ const formatSection = function (text, element = 'p') {
 				.join('\n');
 			break;
 		case 'app':
-			return text.split('\n')
-				.map((textblock, index) => {
-					return `<${element}><note>${textblock.trim()}</note></${element}>`
-				})
-				.join('\n');
+			if (document.getElementById('separator-apparatus')
+				.value != "") {
+				const separator = document.getElementById('separator-apparatus')
+					.value;
+				console.log(separator);
+				return text.split('\n')
+					.map((textblock, index) => {
+						const text = textblock.trim()
+							.split(separator);
+						const locationReference = (text[0]) ? text[0].trim() : "";
+						const noteText = (text[1]) ? text[1].trim() : "";
+						return `<${element}><note loc="${locationReference}">${noteText}</note></${element}>`
+					})
+					.join('\n');
+			} else {
+				return text.split('\n')
+					.map((textblock, index) => {
+						return `<${element}><note>${textblock.trim()}</note></${element}>`
+					})
+					.join('\n');
+			}
+
 			break;
 		case 'bibl':
 			return text.split('\n')
@@ -183,10 +205,33 @@ const formatSection = function (text, element = 'p') {
 				.join('\n');
 			break;
 		case 'dimensions':
-			const textblock = text.split('x');
-			return `<height unit="cm">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</height>
-      <width unit="cm">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</width>
-      <depth unit="cm">${(textblock[2])?textblock[2].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</depth>`;
+			const unit = document.getElementById('unit-dimensions')
+				.value;
+
+			if (document.getElementById('separator-dimensions')
+				.value != "") {
+				const separator = document.getElementById('separator-dimensions')
+					.value;
+				const textblock = text.split(separator);
+
+				switch (textblock.length) {
+				case 1:
+					return `<height unit="${unit}">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED."}</height>`;
+					break;
+				case 2:
+					return `<height unit="${unit}">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED.."}</height>
+			      <width unit="${unit}">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED."}</width>`;
+					break;
+				case 3:
+					return `<height unit="${unit}">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED."}</height>
+			      <width unit="${unit}">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED."}</width>
+			      <depth unit="${unit}">${(textblock[2])?textblock[2].trim():"NO VALUE EXTRACTED."}</depth>`;
+					break;
+				}
+
+			} else {
+				return `<dim unit="${unit}">${text.trim()}</dim>`;
+			}
 			break;
 		default:
 			return text.split('\n')
@@ -206,11 +251,47 @@ const applyAndExport = function (data) {
 			map[node.getAttribute('id')] = node.getElementsByTagName('select')[0].value;
 		});
 	console.log(map);
-	const jumppoint = document.getElementById('jump-point');
-
-	jumppoint.innerHTML = `<a href="#output">Jump to code output!</a><hr/>`;
 
 	const out = [];
+
+	const authority = document.getElementById('authority')
+		.value;
+
+	const LICENSES = {
+		"CC0": {
+			"string": "Creative Commons Public Domain (CC0) license. Freeing content globally without restrictions",
+			"url": "https://creativecommons.org/publicdomain/zero/1.0/"
+		},
+		"CC_BY": {
+			"string": "Creative Commons Attribution (CC BY) license",
+			"url": "https://creativecommons.org/licenses/by/4.0/"
+		},
+		"CC_BY_SA": {
+			"string": "Creative Commons Attribution ShareAlike (CC BY-SA) license",
+			"url": "https://creativecommons.org/licenses/by-sa/4.0/"
+		},
+		"CC_BY_ND": {
+			"string": "Creative Commons Attribution-NoDerivs (CC BY-ND) license",
+			"url": "https://creativecommons.org/licenses/by-nd/4.0/"
+		},
+		"CC_BY_NC": {
+			"string": "Creative Commons Attribution-NonCommercial (CC BY-NC) license",
+			"url": "https://creativecommons.org/licenses/by-nd/4.0/"
+		},
+		"CC_BY_NC_SA": {
+			"string": "Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA) license",
+			"url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+		},
+		"CC_BY_NC_ND": {
+			"string": "Creative Commons Attribution-NonCommercial-NoDerivs (CC BY-NC-ND) license",
+			"url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+		},
+	};
+
+	const licenseKey = document.getElementById('licenses')
+		.value;
+
+	const TOC = [];
 
 	data.forEach((row) => {
 		row['no-option'] = "Error: No column was chosen for this EpiDoc section.";
@@ -218,7 +299,16 @@ const applyAndExport = function (data) {
 		const output = document.getElementById('output');
 		const div = document.createElement('div');
 		const h3 = document.createElement('h3');
-		h3.textContent = row[map['title']];
+
+		const entryTOC = {
+			"headline": row[map['title']],
+			"id": generateID(row[map['title']]),
+		};
+
+		h3.innerHTML = `${entryTOC.headline} <a href="#">[^]</a>`;
+		h3.setAttribute('id', entryTOC.id);
+		TOC.push(entryTOC);
+
 		const pre = document.createElement('pre');
 		const code = document.createElement('code');
 
@@ -234,11 +324,10 @@ const applyAndExport = function (data) {
                     <editor>${row[map['editor']]}</editor>
                 </titleStmt>
                 <publicationStmt>
-                    <authority>Scholarly Institution</authority>
+                    <authority>${authority}</authority>
                     <idno type="filename">${row[map['filename']]}.xml</idno>
                     <availability status="free">
-                        <licence target="http://creativecommons.org/licenses/by/4.0/">Creative Commons
-                            Attribution 4.0 International Licence (CC BY 4.0)</licence>
+                        <licence target="${LICENSES[licenseKey].url}">This file is provided under a ${LICENSES[licenseKey].string}. Please follow the URL to obtain further information about the license.</licence>
                     </availability>
                 </publicationStmt>
                 <sourceDesc>
@@ -337,8 +426,21 @@ const applyAndExport = function (data) {
 		code.textContent = XML_output;
 		out.push(XML_output);
 	})
+
+	const jumppoint = document.getElementById('jump-point');
+	const HR = document.createElement('hr');
+	jumppoint.appendChild(HR);
+	const UL = jumppoint.getElementsByTagName('ul')[0];
+
+	TOC.forEach((snippet) => {
+		const LI = document.createElement('li');
+		LI.innerHTML = `<a href="#${snippet.id}">${snippet.headline}</a>`;
+		UL.appendChild(LI);
+	});
+
 	TEI_DOC_LINK_CONFIG.teiDocLinks();
 	console.log(out.length);
+
 	const teiCorpus = `<teiCorpus xmlns="http://www.tei-c.org/ns/1.0">
                      <teiHeader/>
                      ${out.join('\n')}

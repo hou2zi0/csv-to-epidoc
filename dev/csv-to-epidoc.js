@@ -60,10 +60,10 @@ const processFile = function (data) {
 		});
 	CONFIG.fileLoaded = true;
 
-	document.getElementById('authority')
-		.setAttribute('style', 'visibility: normal;');
-	document.getElementById('licenses')
-		.setAttribute('style', 'visibility: normal;');
+	Array.from(document.getElementsByClassName('static-fields'))
+		.forEach((node) => {
+			node.setAttribute('style', 'visibility: normal;');
+		});
 
 	const applyAndExportButton = document.getElementById('poly-export')
 		.addEventListener('click', (event) => {
@@ -165,11 +165,28 @@ const formatSection = function (text, element = 'p') {
 				.join('\n');
 			break;
 		case 'app':
-			return text.split('\n')
-				.map((textblock, index) => {
-					return `<${element}><note>${textblock.trim()}</note></${element}>`
-				})
-				.join('\n');
+			if (document.getElementById('separator-apparatus')
+				.value != "") {
+				const separator = document.getElementById('separator-apparatus')
+					.value;
+				console.log(separator);
+				return text.split('\n')
+					.map((textblock, index) => {
+						const text = textblock.trim()
+							.split(separator);
+						const locationReference = (text[0]) ? text[0].trim() : "";
+						const noteText = (text[1]) ? text[1].trim() : "";
+						return `<${element}><note loc="${locationReference}">${noteText}</note></${element}>`
+					})
+					.join('\n');
+			} else {
+				return text.split('\n')
+					.map((textblock, index) => {
+						return `<${element}><note>${textblock.trim()}</note></${element}>`
+					})
+					.join('\n');
+			}
+
 			break;
 		case 'bibl':
 			return text.split('\n')
@@ -188,10 +205,33 @@ const formatSection = function (text, element = 'p') {
 				.join('\n');
 			break;
 		case 'dimensions':
-			const textblock = text.split('x');
-			return `<height unit="cm">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</height>
-      <width unit="cm">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</width>
-      <depth unit="cm">${(textblock[2])?textblock[2].trim():"NO VALUE EXTRACTED. DIMENSIONS ARE SPLIT ON 'x'."}</depth>`;
+			const unit = document.getElementById('unit-dimensions')
+				.value;
+
+			if (document.getElementById('separator-dimensions')
+				.value != "") {
+				const separator = document.getElementById('separator-dimensions')
+					.value;
+				const textblock = text.split(separator);
+
+				switch (textblock.length) {
+				case 1:
+					return `<height unit="${unit}">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED."}</height>`;
+					break;
+				case 2:
+					return `<height unit="${unit}">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED.."}</height>
+			      <width unit="${unit}">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED."}</width>`;
+					break;
+				case 3:
+					return `<height unit="${unit}">${(textblock[0])?textblock[0].trim():"NO VALUE EXTRACTED."}</height>
+			      <width unit="${unit}">${(textblock[1])?textblock[1].trim():"NO VALUE EXTRACTED."}</width>
+			      <depth unit="${unit}">${(textblock[2])?textblock[2].trim():"NO VALUE EXTRACTED."}</depth>`;
+					break;
+				}
+
+			} else {
+				return `<dim unit="${unit}">${text.trim()}</dim>`;
+			}
 			break;
 		default:
 			return text.split('\n')
@@ -219,7 +259,7 @@ const applyAndExport = function (data) {
 
 	const LICENSES = {
 		"CC0": {
-			"string": "Creative Commons Public Domain (CC0) license. Freeing content globally without restrictions.",
+			"string": "Creative Commons Public Domain (CC0) license. Freeing content globally without restrictions",
 			"url": "https://creativecommons.org/publicdomain/zero/1.0/"
 		},
 		"CC_BY": {
