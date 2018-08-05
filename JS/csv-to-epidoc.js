@@ -175,7 +175,7 @@ const formatSection = function (text, element = 'p') {
 						const noteString = textblock.trim();
 						const splittingIndex = (noteString.indexOf(separator) != -1) ? noteString.indexOf(separator) : 0;
 						const locationReference = (splittingIndex) ? ` loc="${noteString.slice(0,splittingIndex)}"` : "";
-						const noteText = (splittingIndex) ? `${noteString.slice(splittingIndex+1)}` : "";
+						const noteText = (splittingIndex) ? `${noteString.slice(splittingIndex+1)}` : `${noteString.slice(0)}`;
 						return `<${element}><note${locationReference}>${noteText.trim()}</note></${element}>`
 					})
 					.join('\n');
