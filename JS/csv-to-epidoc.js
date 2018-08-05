@@ -172,11 +172,11 @@ const formatSection = function (text, element = 'p') {
 				console.log(separator);
 				return text.split('\n')
 					.map((textblock, index) => {
-						const text = textblock.trim()
-							.split(separator);
-						const locationReference = (text[0]) ? text[0].trim() : "";
-						const noteText = (text[1]) ? text[1].trim() : "";
-						return `<${element}><note loc="${locationReference}">${noteText}</note></${element}>`
+						const noteString = textblock.trim();
+						const splittingIndex = (noteString.indexOf(separator) != -1) ? noteString.indexOf(separator) : 0;
+						const locationReference = (splittingIndex) ? ` loc="${noteString.slice(0,splittingIndex)}"` : "";
+						const noteText = (splittingIndex) ? `${noteString.slice(splittingIndex+1)}` : "";
+						return `<${element}><note${locationReference}>${noteText.trim()}</note></${element}>`
 					})
 					.join('\n');
 			} else {
@@ -186,7 +186,6 @@ const formatSection = function (text, element = 'p') {
 					})
 					.join('\n');
 			}
-
 			break;
 		case 'bibl':
 			return text.split('\n')
