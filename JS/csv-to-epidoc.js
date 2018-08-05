@@ -103,10 +103,13 @@ const epidocIDs = Array.from(document.getElementsByClassName('drop-down'))
 	});
 
 const generateID = function (textblock, trim = false) {
+	const IDstring = textblock.toLowerCase()
+		.replace(/[ .]/g, '_')
+		.replace(/[,:;\(\)\[\]\<\>]/g, '');
 	if (trim && textblock.length > 15) {
-		return `${textblock.slice(0,16).toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
+		return `${IDstring.slice(0,16)}--${Math.random().toString().slice(2)}`;
 	} else {
-		return `${textblock.toLowerCase().replace(/[ ,.]/g,'_')}--${Math.random().toString().slice(2)}`;
+		return `${IDstring}--${Math.random().toString().slice(2)}`;
 	}
 };
 
@@ -118,7 +121,7 @@ const formatSection = function (text, element = 'p') {
 		case 'person':
 			return text.split('\n')
 				.map((textblock, index) => {
-					return `<person xml:id="${generateID(textblock)}" sex="1">
+					return `<person xml:id="${generateID(textblock, true)}" sex="1">
                         <persName>
                         ${textblock.trim()}
                         </persName>
@@ -146,21 +149,21 @@ const formatSection = function (text, element = 'p') {
 		case 'handNote':
 			return text.split('\n')
 				.map((textblock, index, array) => {
-					return `<${element} scriptRef="" scope="">${textblock.trim()}</${element}>`
+					return `<${element} scriptRef="" scope="" xml:id="${generateID(textblock, true)}">${textblock.trim()}</${element}>`
 				})
 				.join('\n');
 			break;
 		case 'scriptNote':
 			return text.split('\n')
 				.map((textblock, index, array) => {
-					return `<${element} xml:id="${generateID(textblock)}" script="">${textblock.trim()}</${element}>`
+					return `<${element} xml:id="${generateID(textblock, true)}" script="">${textblock.trim()}</${element}>`
 				})
 				.join('\n');
 			break;
 		case 'decoNote': //<scriptNote xml:id="script1" script="square_hebrew">
 			return text.split('\n')
 				.map((textblock, index, array) => {
-					return `<${element} xml:id="${generateID(textblock)}" type="">${textblock.trim()}</${element}>`
+					return `<${element} xml:id="${generateID(textblock, true)}" type="">${textblock.trim()}</${element}>`
 				})
 				.join('\n');
 			break;
