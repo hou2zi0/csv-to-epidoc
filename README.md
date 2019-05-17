@@ -3,6 +3,7 @@
 <!-- TOC START min:1 max:3 link:true update:true -->
 - [csv-to-epidoc](#csv-to-epidoc)
   - [Mapping](#mapping)
+  - [Example file](#example-file)
   - [Conversion process and customizability](#conversion-process-and-customizability)
   - [Specific conversions](#specific-conversions)
     - [Paragraphs and linebreaks](#paragraphs-and-linebreaks)
@@ -33,9 +34,11 @@ The user loads up a CSV-file and selects the mapping of columns to EpiDoc sectio
 
 ![Filled in EpiDoc template](data/images/filled_in.png)
 
+## Example file
+
 An example csv file with pipe separators may be found [here](https://hou2zi0.github.io/csv-to-epidoc/data/files/epidat.csv).
 
-The example file was provided by [Thomas Kollatz](https://github.com/KollatzThomas) and is licensed as follows:
+The example file was provided by Thomas Kollatz ([GitHub](https://github.com/KollatzThomas), [ORCID](https://orcid.org/0000-0003-1904-1841)) and is licensed as follows:
 
 [Steinheim-Institut](http://steinheim-institut.de/)
 
